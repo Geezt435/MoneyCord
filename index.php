@@ -15,7 +15,8 @@ if (isset($_GET['deleteButton'])) {
   mysqli_stmt_close($requestDelete);
   mysqli_close($conn);
 
-  header("");
+  header("Location: index.php");
+  exit;
 }
 
 //Script php untuk update transaksi
@@ -32,18 +33,24 @@ if (isset($_GET['editButton'])) {
   mysqli_stmt_close($requestDelete);
   mysqli_close($conn);
 
-  header("");
+  header("Location: index.php");
 }
 
 $sql = "SELECT id_transaksi, jumlah_transaksi, tgl_transaksi, deskripsi_transaksi, jenis_transaksi FROM tb_records";
 $request = mysqli_query($conn, $sql);
 //End script mengambil data blog
+
+// Output the data as JSON directly into a JavaScript variable
+$all = mysqli_fetch_all($request);
+echo '<script>';
+echo 'var data = ' . json_encode($all) . ';';
+echo '</script>';
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>MoneyCord</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -51,8 +58,18 @@ $request = mysqli_query($conn, $sql);
     <link rel="icon" href="assets/brand/mcdonald.jpg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link rel="stylesheet" href="assets/dist/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- <link href="assets/css/portal.css" id="theme-style" rel="stylesheet"> -->
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="assets/dist/js/bootstrap.bundle.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/color-modes.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -229,8 +246,17 @@ $request = mysqli_query($conn, $sql);
       </div>
     </header>
 
+    <!-- Body -->
     <main>
       <section class="text-center container">
+        <div class="row py-lg-5">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <div class="container">
+                <h2 class="mt-5 mb-3">Chart Pengeluaran dan Pemasukan</h2>
+                <canvas id="myChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
         <div class="row py-lg-5">
           <div class="col-lg-6 col-md-8 mx-auto">
             <h3 class="p-2">Masukkan data transaksi dibawah ini!</h3>
@@ -280,7 +306,7 @@ $request = mysqli_query($conn, $sql);
                           <?php
                           // Print data detail blog dari request yang telah dibuat sebelumnya
                           if (mysqli_num_rows($request) > 0) {
-                            foreach ($result = mysqli_fetch_all($request) as $index) {
+                            foreach ($result = $all as $index) {
                               $idTransaksi = $index[0];
                               $jumlahTransaksi = $index[1];
                               $tglTransaksi = $index[2];
@@ -302,6 +328,7 @@ $request = mysqli_query($conn, $sql);
                               TULIS;
                             }
                           }
+                          mysqli_close($conn);
                           ?>
                         </tbody>
                       </table>
@@ -399,15 +426,9 @@ $request = mysqli_query($conn, $sql);
     </div>
   </footer>
 
-  <script src="assets/dist/js/bootstrap.bundle.min.js"></script> 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="assets/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/color-modes.js"></script>
-  <script src="assets/js/jquery.min.js"></script>
-  <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
-  <script src="assets/plugins/popper.min.js"></script>
-  <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/js/app.js"></script>
+  <!-- Custom Scripts -->
   <script src="assets/js/manage.js"></script>
+  <script src="assets/js/analisis.js"></script>
+  <script src="assets/js/app.js"></script>
   </body>
 </html>

@@ -15,5 +15,5 @@ $query = $pdo->prepare('INSERT INTO tb_records (jumlah_transaksi, tgl_transaksi,
 $query->execute(['jumlah_transaksi' => $jumlah_transaksi, 'tgl_transaksi' => $tgl_transaksi, 'deskripsi_transaksi' => $deskripsi_transaksi, 'jenis_transaksi' => $jenis_transaksi]);
 
 ob_clean();
-header("../../index.php");
+header("Location: ../../index.php");
 exit;
