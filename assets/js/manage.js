@@ -1,22 +1,17 @@
+document.addEventListener('DOMContentLoaded', function() {
+  function getTransaksiId(idForm, idTransaksi) {
+      console.log(idTransaksi);
+      const formTarget = document.getElementById(idForm);
+      const createInput = document.createElement("input");
 
-function getTransaksiId(idForm, idTransaksi) {
-    console.log(idTransaksi);
-    const formTarget = document.getElementById(idForm);
-    const createInput = document.createElement("input");
+      createInput.setAttribute("type", "hidden");
+      createInput.setAttribute("name", "idTransaksi");
+      createInput.setAttribute("value", idTransaksi);
 
-    createInput.setAttribute("type", "hidden");
-    createInput.setAttribute("name", "idTransaksi");
-    createInput.setAttribute("value", idTransaksi);
-
-    formTarget.appendChild(createInput);
+      formTarget.appendChild(createInput);
   }
+});
 
-const myModal = document.getElementById('myModal')
-const myInput = document.getElementById('myInput')
-
-myModal.addEventListener('shown.bs.modal', () => {
-myInput.focus()
-})
 
 // jQuery(document).ready(function($){
 //     // Function to fetch and display records

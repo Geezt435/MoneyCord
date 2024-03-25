@@ -1,4 +1,4 @@
-# MoneyCor
+# MoneyCord
 
 ## Kelompok 5
 
