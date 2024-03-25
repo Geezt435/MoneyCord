@@ -1,4 +1,6 @@
 // Initialize an object to store monthly transaction totals
+
+
 var jumlahTransaksiPerBulan = {
     "January": [0, 0, 0],
     "February": [0, 0, 0],
@@ -18,12 +20,18 @@ var jumlahTransaksiPerBulan = {
 data.forEach(function(entry) {
     var month = new Date(entry[2]).getMonth();
 
+    var curTransaksi = jumlahTransaksiPerBulan[Object.keys(jumlahTransaksiPerBulan)[month]];
+
     if (entry[1] > 0) {
-        jumlahTransaksiPerBulan[Object.keys(jumlahTransaksiPerBulan)[month]][1] += entry[1];
+        curTransaksi[1] = parseInt(curTransaksi[1])  + parseInt(entry[1]);
     } else if (entry[1] < 0) {
-        jumlahTransaksiPerBulan[Object.keys(jumlahTransaksiPerBulan)[month]][0] += entry[1];
+        curTransaksi[0] = parseInt(curTransaksi[1]) + parseInt(entry[1]);
     }
-    jumlahTransaksiPerBulan[Object.keys(jumlahTransaksiPerBulan)[month]][2] += 1;
+    curTransaksi[2] = parseInt(curTransaksi[2]) + 1;
+    console.log(curTransaksi);
+    console.log(curTransaksi[0]);
+    console.log(curTransaksi[1]);
+    console.log(curTransaksi[2]);
 });
 
 var instance = 1;
@@ -32,8 +40,8 @@ Object.entries(jumlahTransaksiPerBulan).forEach(function([bulan, transaction]) {
     var pengeluaran = transaction[0];
     var pemasukan = transaction[1];
 
-    var rataPengeluaran = pengeluaran / transaction[2];
-    var rataPemasukan = pemasukan / transaction[2];
+    var rataPengeluaran = parseFloat(pengeluaran) / parseFloat(transaction[2]);
+    var rataPemasukan = parseFloat(pemasukan) / parseFloat(transaction[2]);
 
     // Output the values to the console
     console.log(rataPengeluaran);
@@ -42,8 +50,8 @@ Object.entries(jumlahTransaksiPerBulan).forEach(function([bulan, transaction]) {
     // Output the values to the page
     const rataPengeluaranDiv = document.getElementById('rataPengeluaran' + instance);
     const rataPemasukanDiv = document.getElementById('rataPemasukan' + instance);
-    rataPengeluaranDiv.innerHTML = rataPengeluaran;
-    rataPemasukanDiv.innerHTML = rataPemasukan;
+    rataPengeluaranDiv.innerHTML = Math.round(rataPengeluaran);
+    rataPemasukanDiv.innerHTML = Math.round(rataPemasukan);
     instance += 1;
 });
 
