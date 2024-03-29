@@ -30,7 +30,7 @@ if (isset($_GET['editButton'])) {
   $sqlDelete = "UPDATE tb_records SET jumlah_transaksi = ?, tgl_transaksi = ?, deskripsi_transaksi = ?, jenis_transaksi = ? WHERE id_transaksi = ?";
   $requestDelete = mysqli_prepare($conn, $sqlDelete);
 
-  mysqli_stmt_bind_param($requestDelete, "sss", $jumlahTransaksi, $tglTransaksi, $deskripsiTransaksi, $jenisTransaksi, $idTransaksi);
+  mysqli_stmt_bind_param($requestDelete, "s", $jumlahTransaksi, $tglTransaksi, $deskripsiTransaksi, $jenisTransaksi, $idTransaksi);
   mysqli_stmt_execute($requestDelete);
   mysqli_stmt_close($requestDelete);
   mysqli_close($conn);
@@ -52,6 +52,18 @@ $json_data = json_encode($all);
     var data = JSON.parse('<?php echo $json_data; ?>');
     // Now you can work with the 'data' variable as a JavaScript array
     console.log(data);
+
+    function getTransaksiId(idForm, idTransaksi) {
+      console.log(idTransaksi);
+      const formTarget = document.getElementById(idForm);
+      const createInput = document.createElement("input");
+
+      createInput.setAttribute("type", "hidden");
+      createInput.setAttribute("name", "idTransaksi");
+      createInput.setAttribute("value", idTransaksi);
+
+      formTarget.appendChild(createInput);
+    }
 </script>
 
 <!DOCTYPE html>
@@ -67,6 +79,10 @@ $json_data = json_encode($all);
     <!-- <link href="assets/css/portal.css" id="theme-style" rel="stylesheet"> -->
     <script src="assets/js/color-modes.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Asset Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script src="assets/dist/js/bootstrap.bundle.min.js"></script> 
 
     <style>
       .bd-placeholder-img {
@@ -439,7 +455,7 @@ $json_data = json_encode($all);
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-                <form id="crud-form" method="get" action="">
+                <form id="conEditTransaksi" method="get" action="">
                   <div class="modal-body">
                     <div class="form-group">
                       <label id="jumlahTransaksi">Jumlah Transaksi</label>
@@ -488,9 +504,4 @@ $json_data = json_encode($all);
 </html>
 
 <!-- Custom Scripts -->
-<script src="assets/js/manage.js"></script>
 <script src="assets/js/analisis.js"></script>
-
-<!-- Asset Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-<script src="assets/dist/js/bootstrap.bundle.min.js"></script> 

@@ -1,16 +1,19 @@
-document.addEventListener('DOMContentLoaded', function() {
-  function getTransaksiId(idForm, idTransaksi) {
-      console.log(idTransaksi);
-      const formTarget = document.getElementById(idForm);
-      const createInput = document.createElement("input");
+// $(document).ready(function() {
+//   document.addEventListener('DOMContentLoaded', function() {
+//   });
+// });
 
-      createInput.setAttribute("type", "hidden");
-      createInput.setAttribute("name", "idTransaksi");
-      createInput.setAttribute("value", idTransaksi);
+// function getTransaksiId(idForm, idTransaksi) {
+//   console.log(idTransaksi);
+//   const formTarget = document.getElementById(idForm);
+//   const createInput = document.createElement("input");
 
-      formTarget.appendChild(createInput);
-  }
-});
+//   createInput.setAttribute("type", "hidden");
+//   createInput.setAttribute("name", "idTransaksi");
+//   createInput.setAttribute("value", idTransaksi);
+
+//   formTarget.appendChild(createInput);
+// }
 
 
 // jQuery(document).ready(function($){
